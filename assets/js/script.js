@@ -8,16 +8,16 @@ var auditTime = function(){
 
     $(".time-set").each(function(){
         var time = moment($(this).text(), "h A").hour();
-        console.log(time)
+        var taskBox = $(this).closest("tr").find(".task-box");
         if(now > time){
-            $(this).closest("tr").find(".task-box").addClass("bg-secondary");
-            console.log("early");
+            taskBox.addClass("bg-secondary");
+            taskBox.prop("contenteditable", false);
         } else if (now < time){
-            $(this).closest("tr").find(".task-box").addClass("bg-success");
-            console.log("late");
+            taskBox.addClass("bg-success");
+            taskBox.prop("contenteditable", true);
         } else if (now == time){
-            $(this).closest("tr").find(".task-box").addClass("bg-danger");
-            console.log("this is fine");
+            taskBox.addClass("bg-danger");
+            taskBox.prop("contenteditable", true);
         }
     })
     
@@ -34,18 +34,6 @@ $(document).ready(function(){
     
 });
 
-// work day task making 
-$(".list-group").on("click", "p", function(){
-    var text = $(this)
-    .text()
-    .trim();
-    
-    var textInput = $("<textarea>")
-    .addClass("form-control")
-    .val(text);
-    $(this).replaceWith(textInput);
-    
-    textInput.trigger("focus");
-  });
+
 
 auditTime();
