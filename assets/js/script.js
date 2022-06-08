@@ -1,5 +1,6 @@
 // saved stuff stays -forever- 
-var tasks = {};
+var tasks = [];
+var table = document.querySelector("#table-schedule");
 
 var auditTime = function(){
     var now = moment().hour();
@@ -41,15 +42,26 @@ $(document).ready(function(){
 // function is only called when button is clicked (fuck off if you want to change it)
 $(".saveBtn").on("click", function(){
     var taskBox = $(this).closest("tr").find(".task-box").text();
-    var timeSet = $(this).closest("tr").find("th").text();
+    var timeSet = $(this).closest("tr").index();
     tasks[timeSet] = taskBox;
 
     alert("Task saved to schedule.");
-    console.log('SAAAAAVE', tasks, timeSet, taskBox);
+    console.log( tasks, timeSet, taskBox);
     saveTasks();
 })
 
-
+var loadTasks = function() {
+    tasks = JSON.parse(localStorage.getItem("tasks"));
+    if(!tasks){
+        tasks = [];
+    }
+    
+    for( var i=0; i<tasks.length; i++){
+        console.log(tasks);
+        var task = tasks[i];
+        $(table).find("tr:nth-child(" + (i + 1) + ") .task-box").text(task);
+    }
+};
 
 
 
