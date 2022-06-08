@@ -1,6 +1,5 @@
-// clicking on a time block can add an event
-// each time block has a save button to save it
 // saved stuff stays -forever- 
+var tasks = {};
 
 var auditTime = function(){
     var now = moment().hour();
@@ -24,6 +23,11 @@ var auditTime = function(){
    
 };
 
+var saveTasks = function(task) {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    console.log('save tasks', tasks);
+  };
+
 $(document).ready(function(){
     var rightNow = moment().format("LLLL");
     console.log(rightNow);
@@ -34,6 +38,20 @@ $(document).ready(function(){
     
 });
 
+// function is only called when button is clicked (fuck off if you want to change it)
+$(".saveBtn").on("click", function(){
+    var taskBox = $(this).closest("tr").find(".task-box").text();
+    var timeSet = $(this).closest("tr").find("th").text();
+    tasks[timeSet] = taskBox;
+
+    alert("Task saved to schedule.");
+    console.log('SAAAAAVE', tasks, timeSet, taskBox);
+    saveTasks();
+})
+
+
+
 
 
 auditTime();
+loadTasks();
