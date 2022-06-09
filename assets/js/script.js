@@ -4,7 +4,6 @@ var table = document.querySelector("#table-schedule");
 var auditTime = function(){
     var now = moment().hour();
     console.log(now);
-
     $(".hour").each(function(){
         var time = moment($(this).text(), "h A").hour();
         var taskBox = $(this).closest("tr").find(".task-box");
