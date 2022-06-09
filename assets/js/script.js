@@ -1,22 +1,22 @@
-// saved stuff stays -forever- 
 var tasks = [];
 var table = document.querySelector("#table-schedule");
 
 var auditTime = function(){
     var now = moment().hour();
     console.log(now);
-
-    $(".time-set").each(function(){
+    $(".hour").each(function(){
+        
         var time = moment($(this).text(), "h A").hour();
         var taskBox = $(this).closest("tr").find(".task-box");
+
         if(now > time){
-            taskBox.addClass("bg-secondary");
+            taskBox.addClass("past");
             taskBox.prop("contenteditable", false);
         } else if (now < time){
-            taskBox.addClass("bg-success");
+            taskBox.addClass("future");
             taskBox.prop("contenteditable", true);
         } else if (now == time){
-            taskBox.addClass("bg-danger");
+            taskBox.addClass("present");
             taskBox.prop("contenteditable", true);
         }
     })
